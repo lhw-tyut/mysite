@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load comment_tags %}
+{% load likes_tags %}
+{% block title %}
+    我的网站|首页
+{% endblock %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shutter.css' %}">
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="{% static "js/velocity.js" %}"></script>
+    <script src="{% static "js/shutter.js" %}"></script>
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-4 col-lg-3">#}
+{#                <div class="jianjie">#}
+{#                    <div class="sj21_1"><a href="#"><img src="img/sj33.jpg" class="adthree"/></a></div>#}
+{#                    <div class="sj21_2">#}
+{#                           <p class="jj">小米8&nbsp;6GB+64GB</p>#}
+{#                           <p class="gg">双频GPS，骁龙845处理器</p>#}
+{#                           <p class="kk">2699元</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-sm-8 col-lg-9">#}
+{#                <div class="Carousel">#}
+{#                    <div class="shutter">#}
+{#                    <div class="shutter-img">#}
+{#                      <a href="#" data-shutter-title="Iron Man"><img src="{% static "images/shutter_1.jpg" %}" alt="#"></a>#}
+{#                      <a href="#" data-shutter-title="Super Man"><img src="{% static "images/shutter_2.jpg" %}" alt="#"></a>#}
+{#                      <a href="#" data-shutter-title="The Hulk"><img src="{% static "images/shutter_3.jpg" %}" alt="#"></a>#}
+{#                      <a href="#" data-shutter-title="The your"><img src="{% static "images/shutter_4.jpg" %}" alt="#"></a>#}
+{#                    </div>#}
+{#                    <ul class="shutter-btn">#}
+{#                      <li class="prev"></li>#}
+{#                      <li class="next"></li>#}
+{#                    </ul>#}
+{#                    <div class="shutter-desc">#}
+{#                      <p>Iron Man</p>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                    <script>#}
+{#                    $(function () {#}
+{#                      $('.shutter').shutter({#}
+{#                        shutterW: 950, // 容器宽度#}
+{#                        shutterH: 358, // 容器高度#}
+{#                        isAutoPlay: true, // 是否自动播放#}
+{#                        playInterval: 3000, // 自动播放时间#}
+{#                        curDisplay: 3, // 当前显示页#}
+{#                        fullPage: false // 是否全屏展示#}
+{#                      });#}
+{#                    });#}
+{#                    </script>#}
+{##}
+{##}
+{#                </div>#}
+{#                <h3 class="home-content">欢迎访问我的网站，随便看</h3>#}
+{#                <!-- 图表容器 DOM -->#}
+{#                <div id="container" style="width: 400px;height:300px;"></div>#}
+{#                <div class="hot-data">#}
+{#                    <h3>今天热门博客</h3>#}
+{#                    <ul>#}
+{#                        {% for hot_data in today_hot_data %}#}
+{#                            <li><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>#}
+{#                            <div class="panel panel-default">#}
+{#                                <div class="panel-heading">#}
+{#                                    <h3 class="panel-title">今天热门博客</h3>#}
+{#                                </div>#}
+{#                                <div class="panel-body">#}
+{#                                    <div class="blog">#}
+{#                                    <h3><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a></h3>#}
+{#                                    <p class="blog-info">#}
+{#                                        <span class="glyphicon glyphicon-tag"></span> <a href="{% url 'blogs_with_type' hot_data.content_object.blog_type.pk %}">{{ hot_data.content_object.blog_type }}</a>&nbsp;&nbsp;#}
+{#                                        <span class="glyphicon glyphicon-time"></span> {{ hot_data.content_object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;#}
+{#                                        阅读({{ hot_data.content_object.get_read_num }})&nbsp;&nbsp;#}
+{#                                        评论({% get_comment_count hot_data.content_object %})&nbsp;&nbsp;#}
+{#                                        点赞({% get_like_count hot_data.content_object %})#}
+{#                                    </p>#}
+{#                                    <p>{{ hot_data.content_object.content|striptags|truncatechars:120 }}</p>#}
+{#                                </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% empty %}#}
+{#                            <li>今天暂时没有热门博客</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <div class="hot-data">#}
+{#                    <h3>昨天热门博客</h3>#}
+{#                    <ul>#}
+{#                        {% for hot_data in yesterday_hot_data %}#}
+{#                            <li><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>#}
+{#                            <div class="panel panel-default">#}
+{#                                <div class="panel-heading">#}
+{#                                    <h3 class="panel-title">昨天热门博客</h3>#}
+{#                                </div>#}
+{#                                <div class="panel-body">#}
+{#                                    <div class="blog">#}
+{#                                    <h3><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a></h3>#}
+{#                                    <p class="blog-info">#}
+{#                                        <span class="glyphicon glyphicon-tag"></span> <a href="{% url 'blogs_with_type' hot_data.content_object.blog_type.pk %}">{{ hot_data.content_object.blog_type }}</a>&nbsp;&nbsp;#}
+{#                                        <span class="glyphicon glyphicon-time"></span> {{ hot_data.content_object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;#}
+{#                                        阅读({{ hot_data.content_object.get_read_num }})&nbsp;&nbsp;#}
+{#                                        评论({% get_comment_count hot_data.content_object %})&nbsp;&nbsp;#}
+{#                                        点赞({% get_like_count hot_data.content_object %})#}
+{#                                    </p>#}
+{#                                    <p>{{ hot_data.content_object.content|striptags|truncatechars:120 }}</p>#}
+{#                                </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% empty %}#}
+{#                            <div class="panel panel-default">#}
+{#                                <div class="panel-heading">#}
+{#                                    <h3 class="panel-title">昨天热门博客</h3>#}
+{#                                </div>#}
+{#                                <div class="panel-body">#}
+{#                                    昨天暂时没有热门博客#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <div class="hot-data">#}
+{#                    <h3>7天热门博客</h3>#}
+{#                    <ul>#}
+{#                        {% for hot_blog in hot_blogs_for_7_days %}#}
+{#                            <li><a href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>#}
+{#                        {% empty %}#}
+{#                            <li>昨天暂时没有热门博客</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <script type="text/javascript">#}
+{#        // 图表配置#}
+{#        var options = {#}
+{#            chart: { type: 'line' },#}
+{#            title: { text: null },#}
+{#            xAxis: {#}
+{#                categories: {{ dates|safe }},   // x 轴分类#}
+{#                tickmarkPlacement: 'on',#}
+{#                title: { text: '前7日阅读量变化'},#}
+{#            },#}
+{#            yAxis: {#}
+{#                title: { text: null },#}
+{#                labels:{ enabled: false },#}
+{#                gridLineDashStyle: 'Dash',#}
+{#            },#}
+{#            series: [{                              // 数据列#}
+{#                name: '阅读量',                     // 数据列名#}
+{#                data: {{ read_nums }}               // 数据#}
+{#            }],#}
+{#            plotOptions: {#}
+{#                line: {#}
+{#                    dataLabels: {#}
+{#                        enabled: true#}
+{#                    }#}
+{#                }#}
+{#            },#}
+{#            legend: { enabled: false },#}
+{#            credits: { enabled: false },#}
+{#        };#}
+{#        // 图表初始化函数#}
+{#        var chart = Highcharts.chart('container', options);#}
+{#    </script>#}
+{##}
+<div class="line46"></div>
+<article>
+  <div class="pics">
+    <ul>
+      <li><i><a href="/"><img src="{% static 'test/images/t01.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+      <li><i><a href="/"><img src="{% static 'test/images/t03.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+      <li><i><a href="/"><img src="{% static 'test/images/t04.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+    </ul>
+  </div>
+  <div class="blank"></div>
+  <div class="leftbox">
+    <div class="tuijian">
+      <h2 class="hometitle"><span><a href="/">模板分享</a><a href="/">学无止境</a><a href="/">慢生活</a><a href="/">热门标签</a></span>特别推荐</h2>
+      <ul>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b01.png' %}"></div>
+          <b>6条网页设计配色原则,让你秒变配色高手</b><span>网页设计好不好看,颜色是毋庸置疑要排首位的,所以关于颜色的搭配技巧以及原则,对于每一个要学习web前端设计的新手来说,这都是一个重要的学习过程.在本教程中我们将与你分享...</span><a href="/" class="readmore">阅读原文</a></li>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b02.jpg' %}"></div>
+          <b>作为一个设计师,如果遭到质疑你是否能恪守自己的原则</b><span>就拿我自己来说吧，有时候会很矛盾，设计好的作品，不把它分享出来，会觉得待在自己电脑里面实在是没有意义...</span><a href="/" class="readmore">阅读原文</a></li>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b03.jpg' %}"></div>
+          <b>愿有人陪你一起颠沛流离</b><span>有一天晚上我收到朋友的邮件，他问我怎样可以最快地摆脱寂寞，我想了想不知道应该怎么回答他，因为我从来没有摆脱过这个问题，我只能去习惯它，就像习惯身体的一部分...</span><a href="/" class="readmore">阅读原文</a></li>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b04.jpg' %}"></div>
+          <b>你要去相信，没有到不了的明天</b><span>不管你现在是一个人走在异乡的街道上始终没有找到一丝归属感，还是你在跟朋友们一起吃饭开心地笑着的时候闪过一丝落寞。...</span><a href="/" class="readmore">阅读原文</a></li>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b05.jpg' %}"></div>
+          <b>美丽的茧</b><span>让世界拥有它的脚步，让我保有我的茧。当溃烂已极的心灵再不想做一丝一毫的思索时，就让我静静回到我的茧内，以回忆为睡榻，以悲哀为覆被，这是我唯一的美丽。...</span><a href="/" class="readmore">阅读原文</a></li>
+        <li>
+          <div class="tpic"><img src="{% static 'test/images/b01.png' %}"></div>
+          <b>6条网页设计配色原则,让你秒变配色高手</b><span>网页设计好不好看,颜色是毋庸置疑要排首位的,所以关于颜色的搭配技巧以及原则,对于每一个要学习web前端设计的新手来说,这都是一个重要的学习过程.在本教程中我们将与你分享...</span><a href="/" class="readmore">阅读原文</a></li>
+      </ul>
+    </div>
+    <div class="newblogs">
+      <h2 class="hometitle">最新文章</h2>
+      <ul id="list" style="">
+           {% for hot_data in recent_blogs %}
+        <li>
+          <h3 class="blogtitle">
+              <a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>
+          </h3>
+          <div class="bloginfo">
+              <p>{{ hot_data.content_object.content|striptags|truncatechars:120 }}</p>
+          </div>
+          <div class="autor">
+              <span class="lm f_l"><a href="{% url 'blogs_with_type' hot_data.content_object.blog_type.pk %}">{{ hot_data.content_object.blog_type }}</a></span>
+              <span class="dtime f_l">{{ hot_data.content_object.created_time|date:"Y-m-d" }}</span>
+              <span class="viewnum f_l">浏览（{{ hot_data.content_object.get_read_num }}）</span>
+              <span class="pingl f_l">评论（{% get_comment_count hot_data.content_object %}）</span>
+               <span class="pingl f_l">点赞（{% get_like_count hot_data.content_object %}）</span>
+              <span class="f_r"><a href="{% url 'blog_detail' hot_data.content_object.pk %}" class="more">阅读原文>></a></span>
+          </div>
+        </li>
+          {% endfor %}
+      </ul>
+  </div>
+  </div>
+  <div class="rightbox">
+      <div class="search">
+      <form action="#" method="post" name="searchform" id="searchform">
+        <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+        <input name="show" value="title" type="hidden">
+        <input name="tempid" value="1" type="hidden">
+        <input name="tbname" value="news" type="hidden">
+        <input name="Submit" class="input_submit" value="搜索" type="submit">
+      </form>
+    </div>
+      <div class="blank"></div>
+    <div class="aboutme">
+      <h2 class="ab_title">关于我</h2>
+      <div class="avatar"><img src="{% static 'test/images/hp.jpg' %}" /></div>
+      <div class="ab_con">
+        <p>网名：永泉狂客</p>
+        <p>职业：人工智能技术 </p>
+        <p>籍贯：山西省-保德县</p>
+        <p>邮箱：lhw_tyut@163.com</p>
+      </div>
+    </div>
+    <div class="paihang">
+      <h2 class="ab_title"><a href="/">今日排行</a></h2>
+      <ul>
+          {% for hot_data in today_hot_data %}
+             <li><b><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</b>
+                <p>{{ hot_data.content_object.content|striptags|truncatechars:120 }}</p>
+             </li>
+          {% empty %}
+            <li>今天暂时没有热门博客</li>
+          {% endfor %}
+      </ul>
+    </div>
+  <div class="paihang">
+      <h2 class="ab_title"><a href="/">昨日排行</a></h2>
+      <ul>
+         {% for hot_data in yesterday_hot_data %}
+             <li><b><a href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</b>
+                <p>{{ hot_data.content_object.content|striptags|truncatechars:120 }}</p>
+             </li>
+          {% empty %}
+            <li>昨天暂时没有热门博客</li>
+          {% endfor %}
+      </ul>
+    </div>
+   <div class="paihang">
+      <h2 class="ab_title"><a href="/">近7天排行</a></h2>
+      <ul>
+      {% for hot_blog in hot_blogs_for_7_days %}
+                            <li><b><a href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</b></li>
+                        {% empty %}
+                            <li>7天暂时没有热门博客</li>
+                        {% endfor %}
+      </ul>
+    </div>
+    <div class="links">
+      <h2 class="ab_title">友情链接</h2>
+      <ul>
+        <li><a href="/">个人博客</a></li>
+        <li><a href="/">个人博客模板</a></li>
+        <li><a href="/">优秀个人博客</a></li>
+      </ul>
+    </div>
+    <div class="weixin">
+      <h2 class="ab_title">微信关注</h2>
+      <ul>
+        <img src="{% static 'test/images/wx.png' %}">
+      </ul>
+    </div>
+  </div>
+</article>
+
+{% endblock %}
